@@ -101,6 +101,18 @@ let store = new Vuex.Store({
     }
   },
   actions: {
+    onIncreaseInParent (context) {
+      console.log('onIncreaseInParent')
+      context.commit('increase')
+    },
+    onDecreaseInParent (context) {
+      console.log('onDecreaseInParent')
+      context.commit('decrease')
+    },
+    onAmountSet (context, amount) {
+      console.log('amountInParent', amount)
+      context.commit('setamount', amount)
+    }
   }
 })
 

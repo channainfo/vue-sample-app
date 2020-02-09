@@ -22,15 +22,18 @@ const Counter = {
   methods: {
     onIncrease () {
       console.log('increase in component')
-      this.$emit('increase')
+      // this.$emit('increase')
+      this.$store.dispatch('onIncreaseInParent')
     },
     onDecrease () {
       console.log('decrease in component')
-      this.$emit('decrease')
+      // this.$emit('decrease')
+      this.$store.dispatch('onDecreaseInParent')
     },
     onChange () {
-      console.log('value', this.amount)
+      // console.log('value', this.amount)
       this.$emit('amount-set', this.amount)
+      this.$store.dispatch('onAmountSet', this.amount)
     }
   }
 }
