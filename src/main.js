@@ -1,12 +1,14 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import 'es6-promise/auto'
 import Vue from 'vue'
+import Vuex from 'vuex'
+
 import Todo from './model/Todo'
 import TodoItemx from './components/TodoItem'
+import Counter from './components/Counter'
 
-// import App from './App'
-// import router from './router'
-
+Vue.use(Vuex)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -76,3 +78,50 @@ let vue = new Vue({
   }
 })
 vue.$message = 'Wah'
+
+// vuex state management
+let store = new Vuex.Store({
+  state: {
+    count: 0,
+    amount: 1
+  },
+  mutations: {
+    increase (state) {
+      console.log('increase state', state.amunt)
+      state.count += parseInt(state.amount)
+      console.log(`incremented to: ${state.count}`)
+    },
+    decrease (state) {
+      console.log('decrease state', state.amunt)
+      state.count -= parseInt(state.amount)
+    },
+    setamount (state, amount) {
+      console.log('mutatiion', amount)
+      state.amount = amount
+    }
+  },
+  actions: {
+  }
+})
+
+store.commit('increase')
+
+new Vue({
+  el: '#vue-app',
+  store: store,
+  components: { Counter },
+  methods: {
+    onIncreaseInParent () {
+      console.log('onIncreaseInParent')
+      this.$store.commit('increase')
+    },
+    onDecreaseInParent () {
+      console.log('onDecreaseInParent')
+      this.$store.commit('decrease')
+    },
+    onAmountSet (amount) {
+      console.log('amountInParent', amount)
+      this.$store.commit('setamount', amount)
+    }
+  }
+})
