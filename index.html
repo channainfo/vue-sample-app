@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>avocado_dragon</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 
+      <app-nav></app-nav>
+      <app-view>
+        <app-sidebar></app-sidebar>
+        <app-content></app-content>
+      </app-view> 
+      -->
+      <todo-itemx
+        v-bind:todo='todos[0]'
+      >
+      </todo-itemx>
+      <hr>
+
+      <todo-itemx 
+        v-bind:todo='todo'
+        v-for='(todo, index) in todos'
+        v-bind:key='"x-"+todo.title'
+      > 
+      </todo-itemx>
+
+      <h3>Component</h3>
+      <ul :style='{ fontSize: itemSize + "px" }' >
+        <todo-item
+          v-on:enlarge-text='onEnlargeText'
+          v-for='(todo, index) in todos' 
+          v-bind:key='todo.id'
+          v-bind:todo='todo'
+        >
+          slot content: {{index + 1}}
+
+        </todo-item>
+      </ul>
+     
+      <hr>
+
+      {{message}}
+      <div style="margin:0;">
+        <input type='text' size="30" v-model='todo.title' placeholder="todo" />
+        <select v-model='todo.status' >
+          <option value='pending'>Pending</option>
+          <option value='in progress'>In Progress</option>
+          <option value='done'>Done</option>
+        </select>
+        <button v-on:click='addTodo'> Add </button>
+      </div>
+
+      <div style="margin-top: 10px; background: #eee; padding:10px;">
+        <div v-if='seen' > This is my color: <span style="color:royalblue; padding: 5px;"> Haha</span> </div>
+        <div>
+          <ul>
+            <li v-for='( todo, index ) in todos'
+                 v-bind:key='todo.id'
+                style="padding-bottom:10px; list-style-type: none;" >
+              <h3 style="padding: 0; margin: 0;">{{todo.title}} </h3>
+              <p style="color: gray; padding: 0px; margin: 0px;">
+                {{todo.status}}
+
+                <button v-if='todo.pending()' v-on:click='startTodo(todo)'> Start </button>
+                <button v-if='todo.inprogress()' v-on:click='startTodo(todo)'> Done </button>
+                <button v-if='todo.done()' v-on:click='startTodo(todo)'> Restart </button>
+                <button v-if='todo.pending()' v-on:click='removeTodo(index)'> Remove </button>
+              </p>
+            </li>
+          </ul>
+        </div>
+
+
+      </div>
+      
+    </div>
+    <!-- built files will be auto injected -->
+
+    <div id='vue-app'>
+     
+    </div>
+
+    <div id='vue-extra'>
+    </div>
+
+  </body>
+</html>
